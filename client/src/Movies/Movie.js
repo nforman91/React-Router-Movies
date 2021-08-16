@@ -6,6 +6,7 @@ export default function Movie(props) {
   const [movie, setMovie] = useState();
 
   const { itemId } = useParam();
+  const { path, url } = useRouteMatch();
 
   let id = movie.id;
   // Change ^^^ that line and use a hook to obtain the :id parameter from the URL
