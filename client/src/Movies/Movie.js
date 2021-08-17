@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useRouteMatch } from 'react-router-dom';
 
-import MovieCard from './MovieCard'
+// import MovieCard from './MovieCard'
 
 export default function Movie(props) {
   const [movie, setMovie] = useState();
@@ -39,11 +39,11 @@ export default function Movie(props) {
     return <div>Loading movie information...</div>;
   }
 
-  const { stars } = movie;
+  const { title, director, metascore, stars } = movie;
 
   return (
     <div className="save-wrapper">
-      <MovieCard>
+      {/* <MovieCard /> */}
         <h3>Actors</h3>
         {stars.map(star => (
           <div key={star} className="movie-star">
@@ -51,7 +51,6 @@ export default function Movie(props) {
           </div>
         ))}
       <div className="save-button">Save</div>
-      </MovieCard>
     </div>
   );
 }
