@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRouteMatch } from 'react-router-dom';
+import { useParams, useRouteMatch } from 'react-router-dom';
+
+import MovieCard from './MovieCard'
 
 export default function Movie(props) {
   const [movie, setMovie] = useState();
 
-  const { itemId } = useParam();
+  const { movieId } = useParams();
   const { path, url } = useRouteMatch();
+  
+  console.log(path, url);
 
   let id = movie.id;
   // Change ^^^ that line and use a hook to obtain the :id parameter from the URL
 
-  const item = items.find(movie => movie.id === parseInt(itemId))
+  // const movies = movies.find(movie => movie.id === parseInt(movieId))
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/movies/${id}`) // Study this endpoint with Postman
+      .get(`http://localhost:5000/api/movies/${movieId}`) // Study this endpoint with Postman
       .then(response => {
         // Study this response with a breakpoint or log statements
         // and set the response data as the 'movie' slice of state
+        setMovie(response.movie);
       })
       .catch(error => {
         console.error(error);
@@ -34,26 +39,19 @@ export default function Movie(props) {
     return <div>Loading movie information...</div>;
   }
 
-  const { title, director, metascore, stars } = movie;
+  const { stars } = movie;
 
   return (
     <div className="save-wrapper">
-      <div className="movie-card">
-        <h2>{title}</h2>
-        <div className="movie-director">
-          Director: <em>{director}</em>
-        </div>
-        <div className="movie-metascore">
-          Metascore: <strong>{metascore}</strong>
-        </div>
+      <MovieCard>
         <h3>Actors</h3>
         {stars.map(star => (
           <div key={star} className="movie-star">
             {star}
           </div>
         ))}
-      </div>
       <div className="save-button">Save</div>
+      </MovieCard>
     </div>
   );
 }
